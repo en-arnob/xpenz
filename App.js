@@ -20,6 +20,9 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator 
       screenOptions={({route}) => ({
+        "tabBarActiveTintColor": "black",
+  "tabBarInactiveTintColor": "black",
+  "tabBarShowLabel": false,
         headerShown: false,
         tabBarStyle: {backgroundColor: '#fff',  height: 60,
         paddingHorizontal: 5,  position: 'absolute',
@@ -37,12 +40,7 @@ export default function App() {
           }
           return <Ionic name={iconName} size={size} colour={colour} />
         },
-      })} tabBarOptions= {{
-        showLabel: false,
-        activeTintColor: 'black',
-        inactiveTintColor: 'black',
-        
-      }} >
+      })} >
         <Tab.Screen name='Xpenz' component={Home}/>
         <Tab.Screen name='Settings' component={Settings}/>
         <Tab.Screen name='About' component={About}/>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AppLoading from 'expo-app-loading';
-import { VStack } from 'native-base';
-
 import Ionic from 'react-native-vector-icons/Ionicons'
 import {NavigationContainer, TabActions} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
@@ -12,15 +8,14 @@ import Home from './screens/Home'
 import Settings from './screens/Settings';
 import About from './screens/About';
 
-
-const STORAGE_KEY = '@save_total'
+import { StateProvider } from './StateContext';
 
 export default function App() {
 
   const Tab = createBottomTabNavigator();
   
   return (
-    <>
+    <StateProvider>
     <StatusBar backgroundColor='#001E6C' style="light"/>
     <NavigationContainer>
       <Tab.Navigator 
@@ -54,7 +49,7 @@ export default function App() {
 
       </Tab.Navigator>
     </NavigationContainer>
-    </>
+    </StateProvider>
   );
 }
 

@@ -1,26 +1,27 @@
 import {StyleSheet, View, Text, ScrollView, Pressable } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, {useEffect, useContext } from 'react'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { StateContext } from '../StateContext';
 
 const STORAGE_KEY = '@save_total'
 
 const Settings = () => {
-  const [pagetotal, setPageTotal] = useState('')
-  
+  const [total, setTotal] = useContext(StateContext)
     useEffect(() => {
 
         readData()
     
       }, [])
-      const addExp = async (n) => {
-        let ptotal = pagetotal + n
+      const subExp = async (n) => {
+        let ptotal = total - n
         try{
             await AsyncStorage.setItem(STORAGE_KEY, ptotal.toString())
         } catch(e){
             alert(e)
         }
-        setPageTotal(ptotal)
+        setTotal(ptotal)
         
       }
       const readData = async () => {
@@ -28,28 +29,26 @@ const Settings = () => {
         if(totalVal){
             totalVal = parseInt(totalVal);
             
-            setPageTotal(totalVal)
+            setTotal(totalVal)
         } else {
-          setPageTotal(0)
+          setTotal(0)
         }
       
       }
       const clearStorage = async () => {
     
         await AsyncStorage.clear()
-        setPageTotal(0)
+        setTotal(0)
     
     }
 
 
-
-
      return (
     <View style={styles.container}>
-      <Pressable onPress={readData} style={{paddingTop:50}}>
+      <Pressable style={{paddingTop:50}}>
           <View style={{padding:30}}>
           <Text style={{color:'#fff', fontSize:30, fontWeight:'700',}}>Xpenz</Text>
-          <Text style={{color:'#fff', fontSize:50, fontWeight:'700',}}>৳ {pagetotal}</Text>
+          <Text style={{color:'#fff', fontSize:50, fontWeight:'700',}}>৳ {total}</Text>
           </View>
       </Pressable>
       <View style={{
@@ -74,7 +73,7 @@ const Settings = () => {
         
                        <Icons name="cigar" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>15 ৳</Text>
-                       <Pressable onPress={()=> addExp(15)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(15)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -99,7 +98,7 @@ const Settings = () => {
         
                        <Icons name="cigar" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>100 ৳</Text>
-                       <Pressable onPress={()=> addExp(15)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(100)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -122,8 +121,8 @@ const Settings = () => {
                     }}>
         
                        <Icons name="cigar" size={30} color="#fff" />
-                       <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>100 ৳</Text>
-                       <Pressable onPress={()=> addExp(15)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>500 ৳</Text>
+                       <Pressable onPress={()=> subExp(500)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -148,7 +147,7 @@ const Settings = () => {
         
                        <Icons name="bottle-soda-classic" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>25 ৳</Text>
-                       <Pressable onPress={()=> addExp(25)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(25)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -173,7 +172,7 @@ const Settings = () => {
         
                        <Icons name="numeric-10-box-outline" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>10 ৳</Text>
-                       <Pressable onPress={()=> addExp(10)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(10)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -183,7 +182,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -198,7 +197,7 @@ const Settings = () => {
         
                        <Icons name="dice-d12-outline" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>12 ৳</Text>
-                       <Pressable onPress={()=> addExp(12)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(12)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -208,7 +207,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -223,7 +222,7 @@ const Settings = () => {
         
                        <Icons name="numeric-5-box-multiple" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>5 ৳</Text>
-                       <Pressable onPress={()=> addExp(5)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(5)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -233,7 +232,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -248,7 +247,7 @@ const Settings = () => {
         
                        <Icons name="candycane" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>2 ৳</Text>
-                       <Pressable onPress={()=> addExp(2)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(2)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -257,7 +256,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -271,8 +270,8 @@ const Settings = () => {
                     }}>
         
                        <Icons name="cash-100" size={30} color="#fff" />
-                       <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>100 ৳</Text>
-                       <Pressable onPress={()=> addExp(100)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>1000 ৳</Text>
+                       <Pressable onPress={()=> subExp(1000)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -281,7 +280,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -295,7 +294,7 @@ const Settings = () => {
         
                        <Icons name="cash" size={30} color="#fff" />
                        <Text style={{fontSize:20, fontWeight:'bold', color:'#fff'}}>1 ৳</Text>
-                       <Pressable onPress={()=> addExp(1)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
+                       <Pressable onPress={()=> subExp(1)  } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
                        elevation: 3,
@@ -304,7 +303,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Add</Text>
+                        color: 'white',}}>Cut</Text>
                         </Pressable>
 
                       
@@ -320,8 +319,8 @@ const Settings = () => {
                     borderTopLeftRadius:30, borderBottomRightRadius:30,
                     }}>
         
-                       <Icons name="cigar" size={30} color="#900" />
-                       <Text style={{fontSize:20, fontWeight:'bold', color:'#900'}}>15 ৳</Text>
+                       <Icons name="delete-forever" size={30} color="#900" />
+                       <Text style={{fontSize:15, fontWeight:'bold', color:'#900'}}>Clear Data</Text>
                        <Pressable onPress={ clearStorage } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
                        paddingHorizontal: 32,
                        borderRadius: 4,
@@ -331,7 +330,7 @@ const Settings = () => {
                         lineHeight: 21,
                         fontWeight: 'bold',
                         letterSpacing: 0.25,
-                        color: 'white',}}>Clear</Text>
+                        color: 'white',}}>Reset</Text>
                         </Pressable>
 
                       

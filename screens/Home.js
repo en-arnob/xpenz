@@ -1,17 +1,21 @@
 import {StyleSheet, View, Text, ScrollView, Pressable } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, {useEffect, useContext } from 'react'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { StateContext } from '../StateContext';
 
 const STORAGE_KEY = '@save_total'
 
 const Home = () => {
-    const [total, setTotal] = useState('')
+  const [total, setTotal] = useContext(StateContext)
+  
     useEffect(() => {
 
         readData()
     
       }, [])
+
       const addExp = async (n) => {
         let ptotal = total + n
         try{
@@ -33,15 +37,7 @@ const Home = () => {
         }
       
       }
-      const clearStorage = async () => {
-    
-        await AsyncStorage.clear()
-        setTotal(0)
-    
-    }
-
-
-
+      
 
      return (
     <View style={styles.container}>
@@ -265,28 +261,7 @@ const Home = () => {
 
 
                   
-                  <View style={{marginTop: 30}}>
-                    <View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'#FFEBC1', alignItems: 'center', marginHorizontal: 30, padding:20,
-                    borderTopLeftRadius:30, borderBottomRightRadius:30,
-                    }}>
-        
-                       <Icons name="cigar" size={30} color="#900" />
-                       <Text style={{fontSize:20, fontWeight:'bold', color:'#900'}}>15 ৳</Text>
-                       <Pressable onPress={ clearStorage } style={{alignItems: 'center',justifyContent: 'center',paddingVertical: 12,
-                       paddingHorizontal: 32,
-                       borderRadius: 4,
-                       elevation: 3,
-                       backgroundColor: 'black',}}>
-                        <Text style={{fontSize: 16,
-                        lineHeight: 21,
-                        fontWeight: 'bold',
-                        letterSpacing: 0.25,
-                        color: 'white',}}>Clear</Text>
-                        </Pressable>
-
-                      
-                    </View>
-                  </View>
+                  
                    
                    
               </ScrollView>
